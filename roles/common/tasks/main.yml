@@ -1,0 +1,69 @@
+---
+- homebrew_tap:
+    name: aws/tap
+    state: present
+
+- homebrew_tap:
+    name: heroku/brew
+    state: present
+brew install heroku
+- name: Add browsers
+  homebrew_cask:
+    name:
+      - firefox
+      - opera
+      - brave-browser
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: common
+
+- name: Add desktop & utility tools
+  homebrew_cask:
+    name:
+      - slack
+      - libreoffice
+      - soundsource
+      - dashlane
+      - kindle
+      - itsycal
+      - printopia
+      - quickbooks
+      - quicken
+      - soulver
+      - vuescan
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: common
+
+- name: Developer tools from Cask
+  homebrew_cask:
+    name:
+      - iterm2
+      - visual-studio-code
+      - postman
+      - docker
+      - postgres
+      - github
+      - tower
+      - android-studio
+      - react-native-debugger
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: common
+
+- name: Developer tools from brew
+  homebrew:
+    name:
+      - yarn
+      - npm
+      - awscli
+      - aws-cdk
+      - aws-sam-cli
+      - httpie
+      - typescript
+      - git-secrets
+      - tmux
+      - heroku
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: common

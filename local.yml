@@ -1,0 +1,7 @@
+---
+- hosts: local
+  roles:
+    - homebrew
+    - python
+    - common
+    - zsh

@@ -1,0 +1,74 @@
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+ZSH_THEME="robbyrussell"
+
+export EDITOR='nano'
+
+# direnv for loading environment variables and scripts when you enter a directory
+eval "$(direnv hook zsh)"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/scott/.oh-my-zsh"
+
+# Django
+alias dj_debug_warnings="python -W error:"":RuntimeWarning:django.db.models.fields:0 manage.py runserver"
+alias sh+="./manage.py shell_plus"
+alias rungmp="./manage.py runserver_plus"
+
+# https://github.com/pyenv/pyenv-installer
+# https://github.com/pyenv/pyenv-virtualenvwrapper
+# Enable Python's pyenv and use VENV plugin
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# if command -v pyenv 1>/dev/null 2>&1; then
+#   eval "$(pyenv init -)"
+# fi
+# export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
+# export WORKON_HOME=$HOME/.virtualenvs
+# pyenv virtualenvwrapper_lazy
+
+# export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Uncomment this to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git django python pip celery postgres brew osx)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# source /usr/local/opt/autoenv/activate.sh

@@ -1,0 +1,53 @@
+---
+- name: download pip
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: ~/Downloads/get-pip.py
+  tags: python
+
+- name: install pip
+  command: >
+    python3 ~/Downloads/get-pip.py
+  tags: python
+
+#- name: Install virtualenvwrapper
+#  pip:
+#    name: 
+#      - virtualenvwrapper
+#  tags: python
+
+# - name: Install OpenSSL for Python
+#   homebrew:
+#     name: openssl
+#     state: linked
+#   tags: python
+
+# - name: Install Python versions
+#   homebrew:
+#     name:
+#       - python37
+#       - python38
+#     state: present
+#   tags: python
+
+- name: Add pip directory
+  file:
+    name: ~/.pip
+    state: directory
+  tags: python
+
+- name: Setup pip configuration
+  copy: >
+    dest=~/.pip/pip.conf
+    src=pip.conf
+  tags: python
+
+# Need to enable the setup
+# https://github.com/pyenv/pyenv#installation
+- name: Install other Developer tools from brew
+  homebrew:
+    name:
+      - pyenv
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: common
