@@ -60,10 +60,10 @@ brew install heroku
       - aws-cdk
       - aws-sam-cli
       - httpie
-      - typescript
       - git-secrets
       - tmux
       - heroku
+      - direnv
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
