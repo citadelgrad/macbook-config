@@ -6,13 +6,12 @@
 - homebrew_tap:
     name: heroku/brew
     state: present
-brew install heroku
+
 - name: Add browsers
   homebrew_cask:
     name:
       - firefox
       - opera
-      - brave-browser
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
