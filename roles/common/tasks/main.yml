@@ -8,7 +8,7 @@
     state: present
 
 - name: Add browsers
-  homebrew_cask:
+  community.general.homebrew_cask:
     name:
       - firefox
       - opera
@@ -17,7 +17,7 @@
   tags: common
 
 - name: Add desktop & utility tools
-  homebrew_cask:
+  community.general.homebrew_cask:
     name:
       - slack
       - libreoffice
@@ -30,23 +30,25 @@
       - quicken
       - soulver
       - vuescan
+      - shiftit
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
 
 - name: Developer tools from Cask
-  homebrew_cask:
+  community.general.homebrew_cask:
     name:
+      # - android-studio
+      # - react-native-debugger
       - iterm2
-      - visual-studio-code
+      # - 'visual-studio-code'
       - postman
       - docker
       - postgres
       - github
       - tower
-      - android-studio
-      - react-native-debugger
     state: present
+    install_options: 'debug'
   when: ansible_os_family == 'Darwin'
   tags: common
 
