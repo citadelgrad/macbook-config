@@ -65,6 +65,12 @@
       - tmux
       - heroku
       - direnv
+      - postgresql@9.6
+      - zlib
+      - libtiff
+      - libjpeg
+      - webp
+      - little-cms2
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
