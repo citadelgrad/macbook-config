@@ -12,6 +12,9 @@
     name:
       - firefox
       - opera
+      - brave-browser
+      - chromium
+      - vivaldi
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
@@ -38,10 +41,10 @@
 - name: Developer tools from Cask
   community.general.homebrew_cask:
     name:
-      # - android-studio
-      # - react-native-debugger
+      - android-studio
+      - react-native-debugger
       - iterm2
-      # - 'visual-studio-code'
+      - visual-studio-code
       - postman
       - docker
       - postgres
