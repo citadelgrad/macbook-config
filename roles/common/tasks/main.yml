@@ -60,6 +60,7 @@
     name:
       - yarn
       - npm
+      - fastlane
       - awscli
       - aws-cdk
       - aws-sam-cli
