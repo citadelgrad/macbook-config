@@ -42,7 +42,6 @@
       - iterm2
       - visual-studio-code
       - postman
-      - postgres
       - github
     state: present
     install_options: 'debug'
@@ -63,7 +62,6 @@
       - tmux
       - heroku
       - direnv
-      - postgresql@9.6
       - zlib
       - libtiff
       - libjpeg
