@@ -14,7 +14,6 @@
       - opera
       - brave-browser
       - chromium
-      - vivaldi
     state: present
   when: ansible_os_family == 'Darwin'
   tags: common
@@ -25,11 +24,9 @@
       - slack
       - libreoffice
       - soundsource
-      - dashlane
       - kindle
       - itsycal
       - printopia
-      - quickbooks
       - quicken
       - soulver
       - vuescan
@@ -41,15 +38,12 @@
 - name: Developer tools from Cask
   community.general.homebrew_cask:
     name:
-      - android-studio
       - react-native-debugger
       - iterm2
       - visual-studio-code
       - postman
-      - docker
       - postgres
       - github
-      - tower
     state: present
     install_options: 'debug'
   when: ansible_os_family == 'Darwin'
