@@ -1,3 +1,13 @@
 ---
+# Ansible Galaxy requirements
+# Updated for Apple Silicon Macs - January 2025
+
 collections:
-  - community.general
+  # Community general collection (includes homebrew modules)
+  - name: community.general
+    version: ">=8.0.0"
+
+  # Optional: Jeff Geerling's Mac collection for enhanced homebrew support
+  # Provides better Apple Silicon compatibility and mas (Mac App Store) support
+  # - name: geerlingguy.mac
+  #   version: ">=2.0.0"

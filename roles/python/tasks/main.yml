@@ -1,35 +1,27 @@
 ---
-- name: download pip
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: ~/Downloads/get-pip.py
+# Updated for Apple Silicon Macs - January 2025
+# Uses pyenv for Python version management (more reliable than get-pip.py approach)
+
+# =============================================================================
+# PYTHON VERSION MANAGEMENT
+# =============================================================================
+- name: Install pyenv and dependencies
+  community.general.homebrew:
+    name:
+      - pyenv                  # Python version manager
+      - pyenv-virtualenv       # Virtual environment support for pyenv
+      - openssl                # Required for building Python
+      - readline               # Required for building Python
+      - sqlite3                # Required for building Python
+      - xz                     # Required for building Python
+      - zlib                   # Required for building Python
+    state: present
+  when: ansible_os_family == 'Darwin'
   tags: python
 
-- name: install pip
-  command: >
-    python3 ~/Downloads/get-pip.py
-  tags: python
-
-#- name: Install virtualenvwrapper
-#  pip:
-#    name: 
-#      - virtualenvwrapper
-#  tags: python
-
-# - name: Install OpenSSL for Python
-#   homebrew:
-#     name: openssl
-#     state: linked
-#   tags: python
-
-# - name: Install Python versions
-#   homebrew:
-#     name:
-#       - python37
-#       - python38
-#     state: present
-#   tags: python
-
+# =============================================================================
+# PIP CONFIGURATION
+# =============================================================================
 - name: Add pip directory
   file:
     name: ~/.pip
@@ -37,17 +29,12 @@
   tags: python
 
 - name: Setup pip configuration
-  copy: >
-    dest=~/.pip/pip.conf
-    src=pip.conf
+  copy:
+    dest: ~/.pip/pip.conf
+    src: pip.conf
   tags: python
 
-# Need to enable the setup
-# https://github.com/pyenv/pyenv#installation
-- name: Install other Developer tools from brew
-  homebrew:
-    name:
-      - pyenv
-    state: present
-  when: ansible_os_family == 'Darwin'
-  tags: common
+# =============================================================================
+# PYENV SHELL INTEGRATION
+# Note: pyenv initialization is handled in zshrc
+# =============================================================================

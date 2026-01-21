@@ -1,67 +1,140 @@
 ---
-- homebrew_tap:
+# Updated for Apple Silicon Macs - January 2025
+
+# =============================================================================
+# HOMEBREW TAPS
+# =============================================================================
+- name: Add AWS tap
+  community.general.homebrew_tap:
     name: aws/tap
     state: present
 
-- homebrew_tap:
-    name: heroku/brew
-    state: present
-
-- name: Add browsers
+# =============================================================================
+# BROWSERS
+# =============================================================================
+- name: Install browsers
   community.general.homebrew_cask:
     name:
       - firefox
-      - opera
       - brave-browser
-      - chromium
+      - arc                    # Modern browser with workspace organization
     state: present
   when: ansible_os_family == 'Darwin'
-  tags: common
+  tags: browsers
 
-- name: Add desktop & utility tools
+# =============================================================================
+# PRODUCTIVITY & UTILITIES
+# =============================================================================
+- name: Install productivity apps
   community.general.homebrew_cask:
     name:
       - slack
       - libreoffice
-      - soundsource
-      - kindle
-      - itsycal
-      - printopia
-      - quicken
-      - soulver
-      - vuescan
-      - shiftit
+      - rectangle              # Window management (replaces discontinued shiftit)
+      - raycast                # Spotlight replacement with extensions
+      - itsycal                # Menu bar calendar
+      - maccy                  # Clipboard manager
+      - alt-tab                # Windows-style alt-tab
+      - stats                  # System monitor in menu bar
+      - the-unarchiver         # Archive extraction
+      - appcleaner             # Clean app uninstalls
     state: present
   when: ansible_os_family == 'Darwin'
-  tags: common
+  tags: productivity
 
-- name: Developer tools from Cask
+# =============================================================================
+# MEDIA & AUDIO
+# =============================================================================
+- name: Install media apps
   community.general.homebrew_cask:
     name:
-      - react-native-debugger
-      - iterm2
-      - visual-studio-code
-      - postman
-      - github
+      - soundsource            # Audio control per-app
+      - vlc                    # Video player
     state: present
-    install_options: 'debug'
   when: ansible_os_family == 'Darwin'
-  tags: common
+  tags: media
 
-- name: Developer tools from brew
-  homebrew:
+# =============================================================================
+# DEVELOPER TOOLS - GUI APPLICATIONS
+# =============================================================================
+- name: Install developer GUI apps
+  community.general.homebrew_cask:
     name:
-      - yarn
-      - npm
-      - fastlane
-      - awscli
-      - aws-cdk
-      - aws-sam-cli
-      - httpie
-      - git-secrets
-      - tmux
-      - heroku
-      - direnv
+      - iterm2                 # Terminal emulator
+      - visual-studio-code     # Code editor
+      - cursor                 # AI-enhanced code editor
+      - postman                # API development
+      - github                 # GitHub Desktop
+      - docker                 # Container runtime
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: developer
+
+# =============================================================================
+# DEVELOPER TOOLS - CLI (Modern replacements)
+# =============================================================================
+- name: Install modern CLI tools
+  community.general.homebrew:
+    name:
+      # Modern CLI replacements
+      - bat                    # Better cat with syntax highlighting
+      - eza                    # Modern ls replacement (was exa)
+      - fd                     # Better find
+      - ripgrep                # Better grep (rg)
+      - fzf                    # Fuzzy finder
+      - zoxide                 # Smarter cd command
+      - tldr                   # Simplified man pages
+      - jq                     # JSON processor
+      - yq                     # YAML processor
+      # Git tools
+      - git                    # Version control
+      - git-secrets            # Prevent secrets in commits
+      - git-lfs                # Large file storage
+      - git-delta              # Better git diff
+      - gh                     # GitHub CLI
+      # Terminal tools
+      - tmux                   # Terminal multiplexer
+      - direnv                 # Directory-specific env vars
+      - tree                   # Directory visualization
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: cli-tools
+
+# =============================================================================
+# CLOUD & DEVOPS
+# =============================================================================
+- name: Install cloud and DevOps tools
+  community.general.homebrew:
+    name:
+      - awscli                 # AWS CLI v2
+      - aws-cdk                # AWS Cloud Development Kit
+      - aws-sam-cli            # AWS Serverless Application Model
+      - terraform              # Infrastructure as code
+      - kubectl                # Kubernetes CLI
+      - helm                   # Kubernetes package manager
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: cloud
+
+# =============================================================================
+# WEB DEVELOPMENT
+# =============================================================================
+- name: Install web development tools
+  community.general.homebrew:
+    name:
+      - httpie                 # User-friendly HTTP client
+      - yarn                   # JavaScript package manager
+      - fnm                    # Fast Node.js version manager
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: webdev
+
+# =============================================================================
+# IMAGE LIBRARIES (for Python/PIL support)
+# =============================================================================
+- name: Install image libraries
+  community.general.homebrew:
+    name:
       - zlib
       - libtiff
       - libjpeg
@@ -69,4 +142,4 @@
       - little-cms2
     state: present
   when: ansible_os_family == 'Darwin'
-  tags: common
+  tags: libraries

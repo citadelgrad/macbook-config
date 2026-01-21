@@ -1,32 +1,53 @@
 ---
-# - name: install zsh
-#   homebrew: name=zsh state=latest
-#   when: ansible_os_family == 'Darwin'
-#   tags: zsh
+# Updated for Apple Silicon Macs - January 2025
+# Note: macOS ships with zsh as the default shell since Catalina (10.15)
 
-# - name: add zsh to list of shells
-#   lineinfile: >
-#     backup=yes
-#     dest=/etc/shells
-#     regexp=^/usr/local/bin/zsh
-#     line=/usr/local/bin/zsh
-#   when: ansible_os_family == 'Darwin'
-#   become: true
-
-# - name: change to zsh (Mac)
-#   shell: chsh -s /usr/local/bin/zsh {{ ansible_env.USER }}
-#   when: ansible_os_family == 'Darwin'
-
-- name: change to zsh (Ubuntu)
-  shell: chsh -s /usr/bin/zsh {{ ansible_env.USER }}
-  when: ansible_os_family == 'Ubuntu'
-
-- name: install oh-my-zsh
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git
-    dest=~/.oh-my-zsh
-    recursive=yes
+# =============================================================================
+# OH-MY-ZSH INSTALLATION
+# =============================================================================
+- name: Check if oh-my-zsh is installed
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmyzsh_installed
   tags: zsh
 
-- name: add zshrc file
-  copy: src=zshrc dest=~/.zshrc
+- name: Install oh-my-zsh
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: ~/.oh-my-zsh
+    depth: 1
+  when: not ohmyzsh_installed.stat.exists
+  tags: zsh
+
+# =============================================================================
+# ZSH CONFIGURATION
+# =============================================================================
+- name: Add zshrc file
+  copy:
+    src: zshrc
+    dest: ~/.zshrc
+    backup: yes
+  tags: zsh
+
+# =============================================================================
+# OPTIONAL: POWERLEVEL10K THEME
+# Uncomment if you want a more powerful prompt
+# =============================================================================
+# - name: Install powerlevel10k theme
+#   git:
+#     repo: https://github.com/romkatv/powerlevel10k.git
+#     dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+#     depth: 1
+#   tags: zsh
+
+# =============================================================================
+# ZSH PLUGINS (via Homebrew for better updates)
+# =============================================================================
+- name: Install zsh plugins via brew
+  community.general.homebrew:
+    name:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+    state: present
+  when: ansible_os_family == 'Darwin'
   tags: zsh
