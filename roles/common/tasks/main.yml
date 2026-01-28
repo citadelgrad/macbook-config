@@ -10,6 +10,18 @@
     state: present
 
 # =============================================================================
+# UUTILS COREUTILS (Rust-based GNU coreutils)
+# Provides more efficient tail/head using modern system APIs (inotify/kqueue)
+# =============================================================================
+- name: Install uutils-coreutils
+  community.general.homebrew:
+    name:
+      - uutils-coreutils        # Rust rewrite of GNU coreutils
+    state: present
+  when: ansible_os_family == 'Darwin'
+  tags: cli-tools
+
+# =============================================================================
 # BROWSERS
 # =============================================================================
 - name: Install browsers
@@ -79,6 +91,7 @@
       # Modern CLI replacements
       - bat                    # Better cat with syntax highlighting
       - eza                    # Modern ls replacement (was exa)
+      - lsd                    # Modern ls with git status & icons
       - fd                     # Better find
       - ripgrep                # Better grep (rg)
       - fzf                    # Fuzzy finder
