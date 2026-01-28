@@ -4,9 +4,9 @@
 # HOMEBREW (Apple Silicon) - Must be set BEFORE oh-my-zsh for brew plugin
 # =============================================================================
 if [[ $(uname -m) == "arm64" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    eval "$(/usr/local/bin/brew shellenv)"
+    [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # =============================================================================
@@ -27,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # Note: 'osx' plugin renamed to 'macos' in oh-my-zsh
 plugins=(git django python pip celery postgres brew macos)
 
-source $ZSH/oh-my-zsh.sh
+[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
 # =============================================================================
 # EDITOR
@@ -94,10 +94,8 @@ fi
 
 # uutils coreutils - Rust-based, more efficient (uses kqueue/inotify)
 # Using aliases instead of PATH to avoid breaking pyenv's readlink usage
-if command -v uu-tail &> /dev/null; then
-    alias tail='uu-tail'
-    alias head='uu-head'
-fi
+command -v uu-tail &> /dev/null && alias tail='uu-tail'
+command -v uu-head &> /dev/null && alias head='uu-head'
 
 # =============================================================================
 # DJANGO ALIASES
@@ -114,6 +112,17 @@ alias gco='git checkout'
 alias gcm='git commit -m'
 alias gp='git push'
 alias gl='git pull'
+
+# =============================================================================
+# ZSH PLUGINS (installed via Homebrew)
+# =============================================================================
+if command -v brew &> /dev/null; then
+    BREW_PREFIX="$(brew --prefix)"
+    [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+        source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+        source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # =============================================================================
 # CUSTOM PATH ADDITIONS

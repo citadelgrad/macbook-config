@@ -5,6 +5,10 @@
 
 set -e
 
+# Change to the script's directory so relative paths work
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
 # Detect architecture and set Homebrew prefix
 if [[ $(uname -m) == "arm64" ]]; then
     HOMEBREW_PREFIX="/opt/homebrew"
