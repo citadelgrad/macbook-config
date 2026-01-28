@@ -14,23 +14,25 @@
       - readline               # Required for building Python
       - sqlite3                # Required for building Python
       - xz                     # Required for building Python
-      - zlib                   # Required for building Python
+      # Note: zlib is installed in common role (image libraries)
     state: present
   when: ansible_os_family == 'Darwin'
   tags: python
 
 # =============================================================================
 # PIP CONFIGURATION
+# Uses modern XDG-compliant path (~/.config/pip/)
 # =============================================================================
-- name: Add pip directory
+- name: Add pip config directory
   file:
-    name: ~/.pip
+    path: ~/.config/pip
     state: directory
+    mode: '0755'
   tags: python
 
 - name: Setup pip configuration
   copy:
-    dest: ~/.pip/pip.conf
+    dest: ~/.config/pip/pip.conf
     src: pip.conf
   tags: python
 

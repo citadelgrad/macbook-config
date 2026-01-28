@@ -24,7 +24,7 @@ The bootstrap script will prompt for your password (required for some installati
 | **Browsers** | Firefox, Brave, Arc |
 | **Productivity** | Slack, LibreOffice, Rectangle, Raycast, Itsycal, Maccy, Alt-Tab, Stats, The Unarchiver, AppCleaner |
 | **Media** | SoundSource, VLC |
-| **Developer** | iTerm2, VS Code, Cursor, Postman, GitHub Desktop, Docker |
+| **Developer** | iTerm2, VS Code, Cursor, Postman, GitHub Desktop, OrbStack |
 
 ### CLI Tools (Homebrew Formulae)
 
@@ -81,9 +81,9 @@ The bootstrap script will prompt for your password (required for some installati
 ls    → lsd
 ll    → lsd -la
 cat   → bat --paging=never
-find  → fd
 tail  → uu-tail    # Rust-based, uses kqueue
 head  → uu-head
+# Note: fd is installed but not aliased (syntax differs from find)
 
 # Django
 sh+        → ./manage.py shell_plus

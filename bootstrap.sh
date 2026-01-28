@@ -43,7 +43,9 @@ if [[ ! -x "$HOMEBREW_PREFIX/bin/brew" ]]; then
 
     # Add to .zprofile for future sessions (Apple Silicon specific)
     if [[ $(uname -m) == "arm64" ]]; then
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        if ! grep -q '/opt/homebrew/bin/brew shellenv' ~/.zprofile 2>/dev/null; then
+            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        fi
     fi
 fi
 

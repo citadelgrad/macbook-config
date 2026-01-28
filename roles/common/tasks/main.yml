@@ -77,7 +77,7 @@
       - cursor                 # AI-enhanced code editor
       - postman                # API development
       - github                 # GitHub Desktop
-      - docker                 # Container runtime
+      - orbstack               # Fast, lightweight Docker & Linux VM
     state: present
   when: ansible_os_family == 'Darwin'
   tags: developer
