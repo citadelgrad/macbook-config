@@ -2,14 +2,6 @@
 # Updated for Apple Silicon Macs - January 2025
 
 # =============================================================================
-# HOMEBREW TAPS
-# =============================================================================
-- name: Add AWS tap
-  community.general.homebrew_tap:
-    name: aws/tap
-    state: present
-
-# =============================================================================
 # UUTILS COREUTILS (Rust-based GNU coreutils)
 # Provides more efficient tail/head using modern system APIs (inotify/kqueue)
 # =============================================================================
@@ -121,7 +113,6 @@
     name:
       - awscli                 # AWS CLI v2
       - aws-cdk                # AWS Cloud Development Kit
-      - aws-sam-cli            # AWS Serverless Application Model
       - terraform              # Infrastructure as code
       - kubectl                # Kubernetes CLI
       - helm                   # Kubernetes package manager
@@ -137,7 +128,7 @@
     name:
       - httpie                 # User-friendly HTTP client
       - yarn                   # JavaScript package manager
-      - fnm                    # Fast Node.js version manager
+      - bun                    # Fast JavaScript runtime & package manager
     state: present
   when: ansible_os_family == 'Darwin'
   tags: webdev
