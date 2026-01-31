@@ -30,6 +30,7 @@
       - firefox
       - brave-browser
     state: present
+    install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
   tags: browsers
 
@@ -50,6 +51,7 @@
       - the-unarchiver         # Archive extraction
       - appcleaner             # Clean app uninstalls
     state: present
+    install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
   tags: productivity
 
@@ -62,6 +64,7 @@
       - soundsource            # Audio control per-app
       - vlc                    # Video player
     state: present
+    install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
   tags: media
 
@@ -78,6 +81,7 @@
       - github                 # GitHub Desktop
       - orbstack               # Fast, lightweight Docker & Linux VM
     state: present
+    install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
   tags: developer
 

@@ -19,6 +19,18 @@
   tags: python
 
 # =============================================================================
+# PYTHON PACKAGE MANAGERS
+# =============================================================================
+- name: Install Python package managers
+  community.general.homebrew:
+    name:
+      - poetry                   # Dependency management & packaging
+      - uv                       # Fast Python package installer & resolver
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: python
+
+# =============================================================================
 # PIP CONFIGURATION
 # Uses modern XDG-compliant path (~/.config/pip/)
 # =============================================================================
