@@ -9,14 +9,13 @@
   community.general.homebrew:
     name:
       - pyenv                  # Python version manager
-      - pyenv-virtualenv       # Virtual environment support for pyenv
       - openssl                # Required for building Python
       - readline               # Required for building Python
       - sqlite3                # Required for building Python
       - xz                     # Required for building Python
       # Note: zlib is installed in common role (image libraries)
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: python
 
 # =============================================================================

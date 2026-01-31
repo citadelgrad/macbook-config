@@ -5,12 +5,20 @@
 # UUTILS COREUTILS (Rust-based GNU coreutils)
 # Provides more efficient tail/head using modern system APIs (inotify/kqueue)
 # =============================================================================
+- name: Unlink conflicting GNU coreutils
+  command: brew unlink coreutils
+  register: unlink_result
+  changed_when: "'Unlinking' in unlink_result.stdout"
+  failed_when: false
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: cli-tools
+
 - name: Install uutils-coreutils
   community.general.homebrew:
     name:
       - uutils-coreutils        # Rust rewrite of GNU coreutils
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: cli-tools
 
 # =============================================================================
@@ -21,9 +29,8 @@
     name:
       - firefox
       - brave-browser
-      - arc                    # Modern browser with workspace organization
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: browsers
 
 # =============================================================================
@@ -43,7 +50,7 @@
       - the-unarchiver         # Archive extraction
       - appcleaner             # Clean app uninstalls
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: productivity
 
 # =============================================================================
@@ -55,7 +62,7 @@
       - soundsource            # Audio control per-app
       - vlc                    # Video player
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: media
 
 # =============================================================================
@@ -71,7 +78,7 @@
       - github                 # GitHub Desktop
       - orbstack               # Fast, lightweight Docker & Linux VM
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: developer
 
 # =============================================================================
@@ -101,8 +108,9 @@
       - tmux                   # Terminal multiplexer
       - direnv                 # Directory-specific env vars
       - tree                   # Directory visualization
+      - mole                   # SSH tunnel manager
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: cli-tools
 
 # =============================================================================
@@ -117,7 +125,7 @@
       - kubectl                # Kubernetes CLI
       - helm                   # Kubernetes package manager
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: cloud
 
 # =============================================================================
@@ -130,7 +138,7 @@
       - yarn                   # JavaScript package manager
       - bun                    # Fast JavaScript runtime & package manager
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: webdev
 
 # =============================================================================
@@ -145,5 +153,5 @@
       - webp
       - little-cms2
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: libraries

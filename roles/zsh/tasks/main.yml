@@ -22,12 +22,13 @@
 # =============================================================================
 # ZSH CONFIGURATION
 # =============================================================================
-- name: Add zshrc file
-  copy:
-    src: zshrc
-    dest: ~/.zshrc
-    backup: yes
-  tags: zsh
+# zshrc deployment disabled - manage ~/.zshrc manually
+# - name: Add zshrc file
+#   copy:
+#     src: zshrc
+#     dest: ~/.zshrc
+#     backup: yes
+#   tags: zsh
 
 # =============================================================================
 # OPTIONAL: POWERLEVEL10K THEME
@@ -49,5 +50,5 @@
       - zsh-autosuggestions
       - zsh-syntax-highlighting
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: zsh
