@@ -1,0 +1,14 @@
+# Fish shell configuration
+# Managed by chezmoi -- edit with: chezmoi edit ~/.config/fish/config.fish
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew (Apple Silicon vs Intel)
+{{ if eq .chezmoi.arch "arm64" -}}
+eval (/opt/homebrew/bin/brew shellenv)
+{{ else -}}
+eval (/usr/local/bin/brew shellenv)
+{{ end -}}
+{{ end -}}
+
+# Fish loads conf.d/*.fish automatically before this file.
+# PATH, env vars, abbreviations, and aliases are in conf.d/ files.

@@ -1,0 +1,12 @@
+{{- $computerName := output "scutil" "--get" "ComputerName" | trim -}}
+{{- $machineType := promptStringOnce . "machine_type" "Machine type (personal/work)" -}}
+
+encryption = "age"
+
+[age]
+    identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+    recipient = "REPLACE_WITH_AGE_PUBLIC_KEY"
+
+[data]
+    computer_name = {{ $computerName | quote }}
+    machine_type = {{ $machineType | quote }}

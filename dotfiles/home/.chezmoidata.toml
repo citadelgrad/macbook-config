@@ -1,0 +1,10 @@
+[git]
+    name = "Scott Nixon"
+    email = "citadelgrad@gmail.com"
+
+[editor]
+    default = "code"
+
+[shell]
+    primary = "fish"
+    fallback = "zsh"

@@ -1,0 +1,112 @@
+# Managed by chezmoi -- edit with: chezmoi edit ~/.zshrc
+
+# =============================================================================
+# HOMEBREW (Apple Silicon vs Intel)
+# =============================================================================
+{{ if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.arch "arm64" -}}
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ else -}}
+[[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
+{{ end -}}
+{{ end -}}
+
+# =============================================================================
+# OH-MY-ZSH CONFIGURATION
+# =============================================================================
+export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+COMPLETION_WAITING_DOTS="true"
+DISABLE_AUTO_UPDATE="true"
+
+plugins=(git django python pip celery postgres brew macos)
+
+[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
+
+# =============================================================================
+# EDITOR
+# =============================================================================
+export EDITOR='{{ .editor.default }}'
+
+# =============================================================================
+# DIRENV
+# =============================================================================
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+# =============================================================================
+# BUN
+# =============================================================================
+if [[ -d "$HOME/.bun" ]]; then
+    export BUN_INSTALL="$HOME/.bun"
+    export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+# =============================================================================
+# PYENV
+# =============================================================================
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
+# =============================================================================
+# ZOXIDE
+# =============================================================================
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+# =============================================================================
+# FZF
+# =============================================================================
+if command -v fzf &> /dev/null; then
+    source <(fzf --zsh)
+fi
+
+# =============================================================================
+# MODERN CLI ALIASES
+# =============================================================================
+if command -v lsd &> /dev/null; then
+    alias ls='lsd'
+    alias ll='lsd -la'
+    alias la='lsd -a'
+    alias lt='lsd --tree --depth=2'
+fi
+
+if command -v bat &> /dev/null; then
+    alias cat='bat --paging=never'
+fi
+
+command -v uu-tail &> /dev/null && alias tail='uu-tail'
+command -v uu-head &> /dev/null && alias head='uu-head'
+
+# =============================================================================
+# DJANGO ALIASES
+# =============================================================================
+alias dj_debug_warnings="python -W error:\"\":RuntimeWarning:django.db.models.fields:0 manage.py runserver"
+alias sh+="./manage.py shell_plus"
+alias runserver="./manage.py runserver_plus"
+
+# =============================================================================
+# GIT ALIASES (supplement oh-my-zsh git plugin)
+# =============================================================================
+alias gst='git status'
+alias gco='git checkout'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+
+# =============================================================================
+# ZSH PLUGINS (installed via Homebrew)
+# =============================================================================
+if command -v brew &> /dev/null; then
+    BREW_PREFIX="$(brew --prefix)"
+    [[ -f "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+        source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    [[ -f "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+        source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi

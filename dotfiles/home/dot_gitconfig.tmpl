@@ -1,0 +1,13 @@
+[core]
+	editor = {{ .editor.default }}
+	excludesfile = {{ .chezmoi.homeDir }}/.config/git/ignore
+[user]
+	email = {{ .git.email }}
+	name = {{ .git.name }}
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,31 @@
+# PATH configuration
+# Managed by chezmoi
+
+# Core tools
+fish_add_path {{ .chezmoi.homeDir }}/.local/bin
+fish_add_path $HOME/go/bin
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew paths
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/opt/node@22/bin
+{{ end -}}
+
+# pyenv
+set -gx PYENV_ROOT "$HOME/.pyenv"
+fish_add_path $PYENV_ROOT/bin
+
+# Bun
+set -gx BUN_INSTALL "$HOME/.bun"
+fish_add_path $BUN_INSTALL/bin
+
+# Android SDK
+set -gx ANDROID_HOME /opt/homebrew/share/android-commandlinetools
+fish_add_path $ANDROID_HOME/platform-tools
+
+# Optional tool paths (only add if directory exists)
+test -d /usr/local/heroku/bin; and fish_add_path /usr/local/heroku/bin
+test -d {{ .chezmoi.homeDir }}/.pulumi/bin; and fish_add_path {{ .chezmoi.homeDir }}/.pulumi/bin
+test -d {{ .chezmoi.homeDir }}/.opencode/bin; and fish_add_path {{ .chezmoi.homeDir }}/.opencode/bin
+test -d {{ .chezmoi.homeDir }}/.amp/bin; and fish_add_path {{ .chezmoi.homeDir }}/.amp/bin
+test -d {{ .chezmoi.homeDir }}/.antigravity/antigravity/bin; and fish_add_path {{ .chezmoi.homeDir }}/.antigravity/antigravity/bin

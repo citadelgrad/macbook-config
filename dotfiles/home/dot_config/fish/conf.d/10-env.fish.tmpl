@@ -1,0 +1,12 @@
+# Environment variables
+# Managed by chezmoi
+
+set -gx EDITOR {{ .editor.default | squote }}
+
+# Ollama models on external drive (machine-specific)
+{{ if eq (output "scutil" "--get" "ComputerName" | trim) "marcus" -}}
+set -gx OLLAMA_MODELS "/Volumes/qwiizlab/scott/ollama/models"
+{{ end -}}
+
+# Claude Code
+set -gx CLAUDE_CODE_ENABLE_TASKS true

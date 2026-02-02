@@ -1,0 +1,36 @@
+README.md
+LICENSE
+Makefile
+
+# macOS-only files
+{{- if ne .chezmoi.os "darwin" }}
+.config/iterm2
+Library
+{{- end }}
+
+# Runtime state files (never manage)
+**/.DS_Store
+
+# Fish shell runtime state
+.config/fish/fish_variables
+
+# Claude Code runtime state
+.claude/history.jsonl
+.claude/stats-cache.json
+.claude/debug/**
+.claude/shell-snapshots/**
+.claude/session-env/**
+.claude/todos/**
+.claude/tasks/**
+.claude/paste-cache/**
+.claude/file-history/**
+.claude/security_warnings_state_*
+.claude/ide/**
+.claude/plans/**
+.claude/.search-index/**
+
+# Cloud/auth state (managed by their own tools)
+.config/gcloud/**
+.config/gh/hosts.yml
+.config/configstore/**
+.config/github-copilot/**

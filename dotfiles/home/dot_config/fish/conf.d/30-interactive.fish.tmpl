@@ -1,0 +1,43 @@
+# Interactive shell configuration
+# Managed by chezmoi
+
+if status is-interactive
+    # pyenv init
+    if command -q pyenv
+        pyenv init - | source
+        pyenv virtualenv-init - | source
+    end
+
+    # direnv hook
+    if command -q direnv
+        direnv hook fish | source
+    end
+
+    # Django aliases
+    alias dj_debug_warnings "python -W error:::RuntimeWarning:django.db.models.fields:0 manage.py runserver"
+    alias sh+ "./manage.py shell_plus"
+    alias plus "./manage.py runserver_plus"
+
+    # gcloud
+    alias gcloud_auth "gcloud auth application-default login --project=prod-meal-mentor"
+
+    # Claude (using bun for faster startup)
+    alias cc "bun x @anthropic-ai/claude-code --dangerously-skip-permissions"
+    alias cc-kimi 'bun x @anthropic-ai/claude-code --dangerously-skip-permissions --model "ollama:kimi-k2.5:cloud"'
+
+    # Modern CLI replacements
+    if command -q lsd
+        alias ls lsd
+        alias ll 'lsd -la'
+        alias la 'lsd -a'
+        alias lt 'lsd --tree --depth=2'
+    end
+
+    # uutils coreutils (aliases to avoid breaking pyenv's readlink)
+    command -q uu-tail; and alias tail uu-tail
+    command -q uu-cat; and alias cat uu-cat
+    command -q uu-head; and alias head uu-head
+
+    # claude-mem
+    alias claude-mem '{{ .chezmoi.homeDir }}/.bun/bin/bun "{{ .chezmoi.homeDir }}/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+end

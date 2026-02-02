@@ -1,0 +1,31 @@
+# External dependencies managed by chezmoi
+# Refresh with: chezmoi apply --refresh-externals
+
+# Oh My Zsh framework
+[".oh-my-zsh"]
+    type = "archive"
+    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+# Oh My Zsh plugins (installed via archive, not Homebrew)
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+# Fisher plugin manager for Fish shell
+[".config/fish/functions/fisher.fish"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish"
+    refreshPeriod = "168h"
