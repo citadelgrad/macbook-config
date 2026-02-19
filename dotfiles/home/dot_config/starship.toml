@@ -1,0 +1,83 @@
+# Starship prompt configuration
+# https://starship.rs/config/
+
+# Prompt format - clean, informative layout
+format = """
+$directory\
+$git_branch\
+$git_status\
+$python\
+$rust\
+$nodejs\
+$package\
+$direnv\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Don't add blank line between prompts
+add_newline = false
+
+# --- Core modules ---
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold red)'
+
+[directory]
+style = 'bold cyan'
+truncation_length = 3
+truncate_to_repo = true
+
+[cmd_duration]
+min_time = 2_000
+style = 'bold yellow'
+
+# --- Git ---
+
+[git_branch]
+symbol = ' '
+style = 'bold purple'
+truncation_length = 30
+
+[git_status]
+style = 'bold red'
+
+# --- Languages ---
+
+[python]
+symbol = ' '
+style = 'bold yellow'
+# Show virtualenv name when active
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = ' '
+style = 'bold red'
+
+[nodejs]
+symbol = ' '
+style = 'bold green'
+# Only detect when TS/JS project files are present
+detect_files = ['package.json', '.node-version', 'tsconfig.json']
+
+[package]
+symbol = '📦 '
+style = 'bold 208'
+
+# --- Direnv ---
+
+[direnv]
+disabled = false
+format = '[$symbol$allowed]($style) '
+symbol = '  '
+style = 'bold orange'
+allowed_msg = ''
+denied_msg = '✗'
+loaded_msg = ''
+unloaded_msg = ''
+
+# --- Disabled modules ---
+
+[aws]
+disabled = true

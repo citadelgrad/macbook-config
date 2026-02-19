@@ -9,6 +9,7 @@
   community.general.homebrew:
     name:
       - pyenv                  # Python version manager
+      - pyenv-virtualenv       # Virtualenv plugin for pyenv
       - openssl                # Required for building Python
       - readline               # Required for building Python
       - sqlite3                # Required for building Python

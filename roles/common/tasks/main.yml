@@ -1,5 +1,5 @@
 ---
-# Updated for Apple Silicon Macs - January 2025
+# Updated for Apple Silicon Macs - February 2026
 
 # =============================================================================
 # UUTILS COREUTILS (Rust-based GNU coreutils)
@@ -29,6 +29,7 @@
     name:
       - firefox
       - brave-browser
+      - microsoft-edge
     state: present
     install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
@@ -41,15 +42,12 @@
   community.general.homebrew_cask:
     name:
       - slack
-      - libreoffice
-      - rectangle              # Window management (replaces discontinued shiftit)
-      - raycast                # Spotlight replacement with extensions
       - itsycal                # Menu bar calendar
       - maccy                  # Clipboard manager
-      - alt-tab                # Windows-style alt-tab
-      - stats                  # System monitor in menu bar
-      - the-unarchiver         # Archive extraction
-      - appcleaner             # Clean app uninstalls
+      - espanso                # Text expansion
+      - karabiner-elements     # Keyboard customization
+      - keepassxc              # Password manager
+      - zoom                   # Video conferencing
     state: present
     install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
@@ -76,14 +74,65 @@
     name:
       - iterm2                 # Terminal emulator
       - visual-studio-code     # Code editor
-      - cursor                 # AI-enhanced code editor
+      - zed                    # Fast code editor
       - postman                # API development
       - github                 # GitHub Desktop
       - orbstack               # Fast, lightweight Docker & Linux VM
+      - claude-code            # Claude Code desktop
+      - ngrok                  # Secure tunnels
     state: present
     install_options: adopt
   when: ansible_facts['os_family'] == 'Darwin'
   tags: developer
+
+# =============================================================================
+# MOBILE DEVELOPMENT
+# =============================================================================
+- name: Install mobile development tools
+  community.general.homebrew_cask:
+    name:
+      - android-commandlinetools  # Android SDK CLI tools
+      - android-studio            # Android IDE
+    state: present
+    install_options: adopt
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: mobile-dev
+
+# =============================================================================
+# CLOUD TOOLS (CASKS)
+# =============================================================================
+- name: Install cloud tool casks
+  community.general.homebrew_cask:
+    name:
+      - gcloud-cli             # Google Cloud SDK
+    state: present
+    install_options: adopt
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: cloud
+
+# =============================================================================
+# FONTS
+# =============================================================================
+- name: Install fonts
+  community.general.homebrew_cask:
+    name:
+      - font-symbols-only-nerd-font
+    state: present
+    install_options: adopt
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: fonts
+
+# =============================================================================
+# JAVA
+# =============================================================================
+- name: Install Java runtime
+  community.general.homebrew_cask:
+    name:
+      - temurin                # Eclipse Temurin JDK
+    state: present
+    install_options: adopt
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: java
 
 # =============================================================================
 # DEVELOPER TOOLS - CLI (Modern replacements)
@@ -98,21 +147,32 @@
       - fd                     # Better find
       - ripgrep                # Better grep (rg)
       - fzf                    # Fuzzy finder
-      - zoxide                 # Smarter cd command
-      - tldr                   # Simplified man pages
+      - dust                   # Intuitive disk usage (du replacement)
       - jq                     # JSON processor
-      - yq                     # YAML processor
+      # Shell & prompt
+      - fish                   # Friendly interactive shell
+      - starship               # Cross-shell prompt
       # Git tools
       - git                    # Version control
       - git-secrets            # Prevent secrets in commits
       - git-lfs                # Large file storage
-      - git-delta              # Better git diff
+      - git-filter-repo        # Fast git history rewriting
+      - gitleaks               # Secret scanning for git repos
       - gh                     # GitHub CLI
       # Terminal tools
       - tmux                   # Terminal multiplexer
       - direnv                 # Directory-specific env vars
       - tree                   # Directory visualization
       - mole                   # SSH tunnel manager
+      # Dev tools
+      - mkcert                 # Local HTTPS certificates
+      - watchman               # File watching service
+      - gum                    # Glamorous shell scripts
+      - pv                     # Pipe viewer (progress for pipes)
+      - rename                 # Batch file rename
+      - wget                   # HTTP file retrieval
+      # Encryption
+      - age                    # Modern file encryption (used by chezmoi)
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
   tags: cli-tools
@@ -124,10 +184,10 @@
   community.general.homebrew:
     name:
       - awscli                 # AWS CLI v2
-      - aws-cdk                # AWS Cloud Development Kit
       - terraform              # Infrastructure as code
-      - kubectl                # Kubernetes CLI
       - helm                   # Kubernetes package manager
+      - stripe-cli             # Stripe API CLI
+      - supabase               # Supabase CLI
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
   tags: cloud
@@ -140,10 +200,71 @@
     name:
       - httpie                 # User-friendly HTTP client
       - yarn                   # JavaScript package manager
-      - bun                    # Fast JavaScript runtime & package manager
+      # Note: bun is installed via its own installer (~/.bun/), not Homebrew
+      - node@22                # Node.js LTS
+      - node@24                # Node.js current
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
   tags: webdev
+
+# =============================================================================
+# CONTAINERS
+# =============================================================================
+- name: Install container tools
+  community.general.homebrew:
+    name:
+      - docker-compose         # Multi-container Docker applications
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: containers
+
+# =============================================================================
+# DATABASES
+# =============================================================================
+- name: Install database tools
+  community.general.homebrew:
+    name:
+      - postgresql@15          # PostgreSQL database
+      - redis                  # In-memory data store
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: databases
+
+# =============================================================================
+# AI/LLM TOOLS
+# =============================================================================
+- name: Install AI and LLM tools
+  community.general.homebrew:
+    name:
+      - ollama                 # Local LLM runner
+      - fabric-ai             # AI augmented CLI
+      - gemini-cli             # Google Gemini CLI
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: ai
+
+# =============================================================================
+# MEDIA TOOLS (CLI)
+# =============================================================================
+- name: Install media CLI tools
+  community.general.homebrew:
+    name:
+      - ffmpeg                 # Video/audio processing
+      - yt-dlp                 # Video downloader
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: media
+
+# =============================================================================
+# LANGUAGES
+# =============================================================================
+- name: Install programming languages
+  community.general.homebrew:
+    name:
+      - rust                   # Rust programming language
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: languages
 
 # =============================================================================
 # IMAGE LIBRARIES (for Python/PIL support)

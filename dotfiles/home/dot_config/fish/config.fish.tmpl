@@ -10,5 +10,14 @@ eval (/usr/local/bin/brew shellenv)
 {{ end -}}
 {{ end -}}
 
+# Rust/Cargo
+fish_add_path $HOME/.cargo/bin
+
 # Fish loads conf.d/*.fish automatically before this file.
 # PATH, env vars, abbreviations, and aliases are in conf.d/ files.
+
+# OrbStack shell integration
+test -f ~/.orbstack/shell/init2.fish; and source ~/.orbstack/shell/init2.fish
+
+# Starship prompt
+starship init fish | source
