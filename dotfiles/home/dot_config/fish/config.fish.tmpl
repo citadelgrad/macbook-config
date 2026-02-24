@@ -1,6 +1,11 @@
 # Fish shell configuration
 # Managed by chezmoi -- edit with: chezmoi edit ~/.config/fish/config.fish
 
+set -g fish_greeting ""
+
+# Rust / Cargo
+fish_add_path -g "$HOME/.cargo/bin"
+
 {{ if eq .chezmoi.os "darwin" -}}
 # Homebrew (Apple Silicon vs Intel)
 {{ if eq .chezmoi.arch "arm64" -}}
@@ -10,14 +15,17 @@ eval (/usr/local/bin/brew shellenv)
 {{ end -}}
 {{ end -}}
 
-# Rust/Cargo
-fish_add_path $HOME/.cargo/bin
-
 # Fish loads conf.d/*.fish automatically before this file.
 # PATH, env vars, abbreviations, and aliases are in conf.d/ files.
 
-# OrbStack shell integration
-test -f ~/.orbstack/shell/init2.fish; and source ~/.orbstack/shell/init2.fish
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 
-# Starship prompt
+# Added by git-ai installer
+fish_add_path -g "/Users/scott/.git-ai/bin"
+
+alias bots '/Volumes/qwiizlab/projects/connect-the-bots/target/release/attractor-cli'
+alias openclaw 'ssh bot@100.121.21.88'
+
+# Starship prompt (must be last)
 starship init fish | source
